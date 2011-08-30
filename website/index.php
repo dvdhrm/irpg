@@ -8,20 +8,22 @@
 /*
  * Create basic HTML layout and include the requested user page.
  * TODO: The sidebar should be created dynamically.
+ *
+ * Do not modify this file for configuration issues. The file "config.php" is
+ * included if it exists so you can use it to overwrite configuration variables
+ * declared in this file.
  */
 
 /* global config */
 $root = "/"; // Root website path
 $title = "OnlineGamesNet Idle RPG"; // Website title
-$dbhost = "87.118.119.6"; // DB host
-$dbuser = "irpg"; // DB username
+$dbhost = "host"; // DB host
+$dbuser = "user"; // DB username
 $dbpass = "pass"; // DB password
-$dbname = "irpg"; // DB database name
+$dbname = "db"; // DB database name
 
-/* set page node */
+/* default page node */
 $node = "players";
-if (isset($_GET["node"]))
-	$node = $_GET["node"];
 
 /* preset dynamically loaded variables */
 $players_total = "0";
@@ -31,6 +33,13 @@ $traffic1 = "0 kb";
 $traffic2 = "0 kb";
 $chan_size = "0";
 $chan_bans = "0";
+
+/* include config file */
+if (is_file("config.php"))
+	include("config.php");
+
+if (isset($_GET["node"]))
+	$node = $_GET["node"];
 
 /* connect to DB */
 $db = @pg_connect("host=$dbhost dbname=$dbname user=$dbuser password=$dbpass");
