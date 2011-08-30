@@ -14,9 +14,13 @@
 $players = array();
 
 if ($db) {
-	$res = pg_query("SELECT * FROM gsrpg_players");
+	$res = pg_query("SELECT playerid, username, level, class, next, online FROM gsrpg_players");
 	if ($res) {
 		while ($row = pg_fetch_array($res)) {
+			$sql = pg_query("SELECT ITEMSUM(".$row["playerid"].")");
+			$isum = pg_fetch_array($sql);
+			$row["isum"] = $isum[0];
+			pg_free_result($sql);
 			$players[] = $row;
 		}
 		pg_free_result($res);
@@ -61,11 +65,12 @@ if ($db) {
 
 $i = 1;
 foreach($players as $p) {
-	$id = $p["id"];
+	$id = $p["playerid"];
 	$name = $p["username"];
-	$desc = $p["description"];
-	$ttl = $p["timeToLevel"];
-	$isum = $p["itemsum"];
+	$level = $p["level"];
+	$desc = $p["class"];
+	$ttl = $p["next"];
+	$isum = $p["isum"];
 	$online = "~";
 	if ($p["online"])
 		$online = "+";
@@ -78,7 +83,7 @@ foreach($players as $p) {
     <td align="left">
       <strong class="vfont"><?php echo $online; ?></strong>
       <a href="?node=players;id=<?php echo $id; ?>"><?php echo $name; ?></a>,
-      <?php echo $desc; ?>
+      the level <?php echo $level; ?> <?php echo $desc; ?>
     </td>
     <td align="left"><?php echo $ttl; ?></td>
     <td align="left" style="padding: 1px 0;"><?php echo $isum; ?></td>
