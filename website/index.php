@@ -57,6 +57,19 @@ $db = @pg_connect("host=$dbhost dbname=$dbname user=$dbuser password=$dbpass");
     <div id="maintitle">
       <a href="<?php echo $root; ?>">OGameNet Idle RPG</a>
     </div>
+<?php
+
+if (!$db) {
+
+?>
+    <div style="color: red;">
+      <strong><center>Database connection failed</center></strong>
+    </div>
+<?php
+
+}
+
+?>
     <table border="0" cellpadding="0" cellspacing="0" id="content"> 
       <tr>
         <td id="main" valign="top">
