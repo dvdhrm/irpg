@@ -1,0 +1,15 @@
+= TODO list =
+
+Items that are still todo. They are sorted by importance and may include
+important fixes but also just some ideas about additional features.
+
+== Website ==
+
+- add team listing
+- add statistics
+- dynamically retrieve sidebar stats
+
+== GSRPG ==
+
+- Add quests
+- Split perl code into multiple source files for better readability.
