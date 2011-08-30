@@ -36,11 +36,11 @@ if ($db) {
 
 <div align="right">
   Sort By:
-  <a href="?node=players;sort=level;start=">Level</a> /
-  <a href="?node=players;sort=itemsum;start=">Itemsum</a> /
-  <a href="?node=players;sort=next;start=">Time to Level</a> /
-  <a href="?node=players;sort=username;start=">Username</a> /
-  <a href="?node=players;sort=idled;start=">Idled</a><br />
+  <a href="?node=players;sort=level">Level</a> /
+  <a href="?node=players;sort=itemsum">Itemsum</a> /
+  <a href="?node=players;sort=next">Time to Level</a> /
+  <a href="?node=players;sort=username">Username</a> /
+  <a href="?node=players;sort=idled">Idled</a><br />
 
   <strong class="highlight"><span class="vfont">+</span></strong>
   denotes online player,
@@ -48,14 +48,7 @@ if ($db) {
   for offline
 </div>
 
-<div align="center">
-  <a href="?node=players;sort=;start=0">First</a>&nbsp;&nbsp;
-  <a href="?node=players;sort=;start=0">&lt;</a>
-  <a href="?node=players;sort=;start=0"><strong class="boo">1</strong></a>
-  <a href="?node=players;sort=;start=">&gt;</a>
-  &nbsp;&nbsp;<a href="?node=players;sort=;start=0">Last</a>
-  <br />
-</div>
+<br>
 
 <table border="0" cellpadding="0" cellspacing="0" id="players">
   <tr>
@@ -96,16 +89,6 @@ foreach($players as $p) {
 
 ?>
 </table>
-
-<br />
-<div align="center">
-  <a href="?node=players;sort=;start=0">First</a>&nbsp;&nbsp;
-  <a href="?node=players;sort=;start=0">&lt;</a>
-  <a href="?node=players;sort=;start=0"><strong class="boo">1</strong></a>
-  <a href="?node=players;sort=;start=">&gt;</a>
-  &nbsp;&nbsp;<a href="?node=players;sort=;start=0">Last</a>
-  <br />
-</div>
 <?php
 
 /* End of List of Players */
