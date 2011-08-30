@@ -14,7 +14,22 @@
 $players = array();
 
 if ($db) {
-	$res = pg_query("SELECT playerid, username, level, class, next, online FROM gsrpg_players");
+	$orderby = "";
+	$sort = "level";
+	if (isset($_GET["level"]))
+		$sort = $_GET["level"];
+
+	if ($sort == "next")
+		$orderby = "ORDER BY next ASC";
+	elseif ($sort == "username")
+		$orderby = "ORDER BY username ASC";
+	elseif ($sort == "idled")
+		$orderby = "ORDER BY idled DESC";
+	else
+		$orderby = "ORDER BY level DESC";
+
+	$res = pg_query("SELECT playerid, username, level, class, next, online
+	FROM gsrpg_players " . $orderby);
 	if ($res) {
 		while ($row = pg_fetch_array($res)) {
 			$sql = pg_query("SELECT ITEMSUM(".$row["playerid"].")");
