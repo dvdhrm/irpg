@@ -1,0 +1,158 @@
+CREATE TABLE gsrpg_penalties (
+    playerid integer NOT NULL,
+    pen_text bigint DEFAULT 0 NOT NULL,
+    pen_quit bigint DEFAULT 0 NOT NULL,
+    pen_part bigint DEFAULT 0 NOT NULL,
+    pen_nick bigint DEFAULT 0 NOT NULL,
+    pen_kick bigint DEFAULT 0 NOT NULL,
+    pen_logout bigint DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE gsrpg_players (
+    playerid serial NOT NULL,
+    username character varying(20) NOT NULL,
+    "password" character varying(20) NOT NULL,
+    email character varying(50) NOT NULL,
+    gameid integer,
+    "level" integer,
+    "class" character varying(50),
+    online smallint DEFAULT 0 NOT NULL,
+    idled bigint,
+    "next" bigint NOT NULL,
+    lastlogin bigint DEFAULT 0 NOT NULL,
+    lastlogout bigint DEFAULT 0 NOT NULL,
+    created bigint,
+    nick character varying(30),
+    userhost character varying(100),
+    noop smallint DEFAULT 0,
+    status smallint DEFAULT 1,
+    admin smallint DEFAULT 0,
+    challenge bigint DEFAULT 0 NOT NULL,
+    challenge_times integer DEFAULT 0 NOT NULL,
+    notice smallint DEFAULT 0 NOT NULL,
+    teamid integer DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE gsrpg_items (
+    playerid integer NOT NULL,
+    amulet integer DEFAULT 0 NOT NULL,
+    charm integer DEFAULT 0 NOT NULL,
+    helm integer DEFAULT 0 NOT NULL,
+    pair_of_boots integer DEFAULT 0 NOT NULL,
+    pair_of_gloves integer DEFAULT 0 NOT NULL,
+    ring integer DEFAULT 0 NOT NULL,
+    set_of_leggings integer DEFAULT 0 NOT NULL,
+    shield integer DEFAULT 0 NOT NULL,
+    tunic integer DEFAULT 0 NOT NULL,
+    weapon integer DEFAULT 0 NOT NULL,
+    unique_helm smallint,
+    unique_weapon smallint,
+    unique_amulet smallint,
+    unique_pair_of_gloves smallint,
+    unique_pair_of_boots smallint,
+    unique_shield smallint,
+    unique_tunic smallint,
+    unique_ring smallint,
+    unique_set_of_leggings smallint,
+    unique_charm smallint
+);
+
+CREATE TABLE gsrpg_itemrecords (
+    playerid integer DEFAULT 0 NOT NULL,
+    "timestamp" bigint DEFAULT 0 NOT NULL,
+    "type" character varying NOT NULL,
+    "level" integer DEFAULT 0 NOT NULL,
+    "action" smallint DEFAULT 0 NOT NULL,
+    isunique character varying DEFAULT 0 NOT NULL
+);
+
+CREATE FUNCTION itemsum(integer) RETURNS integer
+    AS '
+SELECT amulet+charm+helm+pair_of_boots+pair_of_gloves+ring+set_of_leggings+shield+tunic+weapon
+FROM gsrpg_items WHERE playerid = $1'
+    LANGUAGE sql;
+
+CREATE TABLE gsrpg_modifiers (
+    playerid integer DEFAULT 0 NOT NULL,
+    "timestamp" bigint DEFAULT 0 NOT NULL,
+    "type" character varying(20),
+    "level" integer DEFAULT 0,
+    timemod bigint DEFAULT 0,
+    curnext bigint DEFAULT 0,
+    mod smallint DEFAULT 1 NOT NULL
+);
+
+CREATE TABLE gsrpg_teams (
+    teamid serial NOT NULL,
+    name character varying(20) NOT NULL,
+    description character varying(60) NOT NULL,
+    "owner" integer NOT NULL,
+    created bigint DEFAULT 0 NOT NULL,
+    "password" character varying(30) NOT NULL
+);
+
+CREATE FUNCTION username(integer) RETURNS character varying
+    AS '
+SELECT username FROM gsrpg_players WHERE playerid = $1
+'
+    LANGUAGE sql;
+
+CREATE FUNCTION members(integer) RETURNS SETOF integer
+    AS '
+SELECT playerid FROM gsrpg_players WHERE teamid = $1
+'
+    LANGUAGE sql;
+
+CREATE TABLE gsrpg_log (
+    timer bigint DEFAULT 0 NOT NULL
+);
+
+CREATE UNIQUE INDEX players_playerid ON gsrpg_players USING btree (playerid);
+
+CREATE INDEX penalties_playerid ON gsrpg_penalties USING btree (playerid);
+
+CLUSTER penalties_playerid ON gsrpg_penalties;
+
+CREATE INDEX items_playerid ON gsrpg_items USING btree (playerid);
+
+CLUSTER items_playerid ON gsrpg_items;
+
+CREATE INDEX itemrecords_playerid ON gsrpg_itemrecords USING btree (playerid);
+
+CLUSTER itemrecords_playerid ON gsrpg_itemrecords;
+
+CREATE INDEX players_nick ON gsrpg_players USING btree (nick);
+
+CREATE INDEX modifiers_playerid ON gsrpg_modifiers USING btree (playerid);
+
+CLUSTER modifiers_playerid ON gsrpg_modifiers;
+
+CREATE INDEX modifiers_type ON gsrpg_modifiers USING btree ("type");
+
+CREATE INDEX players_username ON gsrpg_players USING btree (username);
+
+CREATE INDEX players_challenge ON gsrpg_players USING btree (challenge);
+
+CREATE INDEX players_curonline ON gsrpg_players USING btree (online) WHERE (online = 1);
+
+CREATE INDEX players_teamid ON gsrpg_players USING btree (teamid);
+
+CREATE INDEX modifiers_plusminus ON gsrpg_modifiers USING btree (mod);
+
+CREATE INDEX players_online ON gsrpg_players USING btree (online);
+
+CLUSTER players_online ON gsrpg_players;
+
+CREATE INDEX players_next ON gsrpg_players USING btree ("next");
+
+ALTER TABLE ONLY gsrpg_players
+    ADD CONSTRAINT players_unique PRIMARY KEY (playerid);
+    
+CREATE UNIQUE INDEX teams_teamid ON gsrpg_teams USING btree (teamid);	
+
+ALTER TABLE gsrpg_items ADD FOREIGN KEY ( playerid ) REFERENCES gsrpg_players ( playerid ) ON UPDATE cascade ON DELETE cascade;
+ALTER TABLE gsrpg_itemrecords ADD FOREIGN KEY ( playerid ) REFERENCES gsrpg_players ( playerid ) ON UPDATE cascade ON DELETE cascade;
+ALTER TABLE gsrpg_modifiers ADD FOREIGN KEY ( playerid ) REFERENCES gsrpg_players ( playerid ) ON UPDATE cascade ON DELETE cascade;
+ALTER TABLE gsrpg_penalties ADD FOREIGN KEY ( playerid ) REFERENCES gsrpg_players ( playerid ) ON UPDATE cascade ON DELETE cascade;
+
+CLUSTER teams_teamid ON gsrpg_teams;

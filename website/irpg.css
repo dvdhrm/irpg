@@ -1,0 +1,151 @@
+/*
+ * Default Stylesheet
+ * Copyright (c) 2004, Jake Ray
+ * All rights reserved.
+ *
+ * Modified 2011 by David Herrmann
+ * License terms unclear. Contact Jake Ray for licensing terms.
+ * Modifications dedicated to the Public Domain.
+ */
+
+a, a:visited {
+	color: #06c;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #06c;
+	text-decoration: underline;
+}
+
+h4 {
+	margin: 0;
+	padding: 0;
+}
+
+html,body {
+	background-color: #fff;
+	color: #000;
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	margin: 0;
+	padding: 8px;
+}
+
+img {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+code.gamedoc {
+	margin:0;
+	padding:10px 0 10px 15px;
+}
+
+p.gamedoc {
+	margin:0;
+	padding:3px;
+}
+
+.big { font-size: 125%; }
+.boo { color: #000; }
+.highlight { color: #06c; }
+
+.playertitle {
+	border-bottom: solid 1px #bbb;
+	color: #06c;
+	font-size: 28px;
+	letter-spacing: 4px;
+	width: 30%;
+}
+
+.stats td { padding: 2px; }
+.stats tr.alt { background-color: #ddd; }
+#content { width: 100%; }
+
+#content #main {
+	padding: 0 10px 5px 10px;
+	text-align: left;
+	width: 80%;
+}
+
+#content #main .box {
+	border: solid 1px #bbb;
+	width: 100%;
+	-moz-border-radius: 0.3em;
+}
+
+#content #main .box th {
+	background-color: #ddd;
+	border-bottom: solid 1px #bbb;
+	border-left: solid 2px #fff;
+	border-right: solid 2px #fff;
+	border-top: solid 2px #fff;
+	color: #06c;
+	font-size: 15px;
+	padding: 3px 7px;
+	text-align: left;
+	width: 100%;
+}
+
+#content #main .box td {
+	padding: 4px 6px;
+	text-align: left;
+	width: 100%;
+}
+
+#content #right {
+	padding: 10px;
+	text-align: center;
+	width: 20%;
+}
+
+#content #right .box {
+	border: solid 1px #bbb;
+	width: 100%;
+	-moz-border-radius: 0.3em;
+}
+
+#content #right .box th {
+	background-color: #ddd;
+	border-bottom: solid 1px #bbb;
+	border-left: solid 2px #fff;
+	border-right: solid 2px #fff;
+	border-top: solid 2px #fff;
+	color: #06c;
+	font-size: 15px;
+	padding: 3px;
+	text-align: center;
+	width: 100%;
+}
+
+#content #right .box td {
+	padding: 4px 6px;
+	text-align: left;
+	width: 100%;
+}
+
+#maintitle, #maintitle a, #maintitle a:visited, #maintitle a:hover {
+	color: #aaa;
+	font-size: 185%;
+	letter-spacing: 8px;
+	margin: 0;
+	padding: 3px 0;
+	text-decoration: none;
+}
+
+#navbar {
+	border: solid 1px #bbb;
+	padding: 0;
+	width: 59%;
+	-moz-border-radius: 0.3em;
+}
+
+#navbar #navtext {
+	background-color: #ddd;
+	border: solid 2px #fff;
+	padding: 2px 4px;
+	text-align: center;
+	-moz-border-radius: 0.3em;
+}

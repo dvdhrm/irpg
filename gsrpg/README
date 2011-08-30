@@ -1,0 +1,154 @@
+===========================================================================
+GSRPG v1.2.0 README
+Copyright (©) Jake Ray, Nick Hale and the GSRPG Development Team
+Modified 25.November.2007
+===========================================================================
+
+Table of Contents
+   I. License & Introduction
+  II. Installation
+ III. Performance & Maintenance
+  IV. Bug Reports
+   V. Troubleshooting
+
+---------------------------------------------------------------------------
+ I. License & Introduction
+---------------------------------------------------------------------------
+
+ GSRPG v1.2.0; an Idle RPG Bot
+ Copyright (c) Jake Ray, Nick Hale and the GSRPG Development Team
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  * Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  * Neither the name of the GSRPG Developers nor the names of its contributors
+    may be used to endorse or promote products derived from this software
+    without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ THE POSSIBILITY OF SUCH DAMAGE.
+
+ First and foremost, I must give credit to jotun for the original concept
+ behind the Idle RPG. If you wish to get a more detailed summary of what
+ this game is all about, please visit http://irpg.net for info
+ on this particular incarnation of the Idle RPG, or http://irpg.net for
+ information on the original bot and the original game.
+ 
+ Secondly, if you have not been to http://irpg.net/ and read
+ the requirements to run this bot, please do so now. The requirements for
+ this game are slightly more involved than the original, and this bot will
+ not function without certain dependencies.
+
+---------------------------------------------------------------------------
+ II. Installation
+---------------------------------------------------------------------------
+
+ Untar the contents of this package to the directory of your choosing. The
+ following files are necessary to make GSRPG run:
+   1) gsrpg.pl
+   2) gsrpg.conf (or another similarly formatted config file)
+   3) gsrpg.schema
+   
+ Once you have the contents of this package extracted, please use some kind
+ of text editor to edit gsrpg.conf and ensure the settings within it are
+ correct.
+ 
+ From this point, this guide must assume several things. First, I must
+ assume that you have a copy of perl (preferably 5.8.x) running, and that
+ you have a database server (PostgreSQL) running. If you do not have these
+ things running and are not capable of installing them, you might as well
+ give up here, because you're not going to be running this bot.
+ 
+ Third, and most importantly, you must have your database server set up
+ for GSRPG to run. I strongly recommend you create your own user for GSRPG,
+ and I very strongly recommend you give GSRPG its own database. If you
+ need some help in doing these things, please www.postgresql.org, where you
+ find some excellent documentation on configuring your database server.
+ 
+ So, assuming you have a blank database just waiting for something to do,
+ you must now import the tables and indices that GSRPG needs. These are
+ found in gsrpg.schema, and you can knock out the whole thing in one
+ step by taking advantage of the "psql" tool.
+ 
+   psql -f gsrpg.schema yourdatabasename
+   
+ psql can take a variety of arguments (psql --help), but in order to
+ properly create our database, you must pass the -f flag to force PGSQL
+ to use the commands found in gsrpg.schema. Or you can go through and
+ manually enter every command, but that's not much fun at all.
+  
+ After that, the time has come to start GSRPG. Make sure you have edited
+ gsrpg.conf and that the settings found in it are accurate. If you have
+ done this, then start the bot by typing:
+  
+   perl gsrpg.pl
+ 
+ At this point GSRPG will be running, and your game will have officially
+ started. From here on out, please consult the GSRPG website for a list
+ of commands. If GSRPG does not join your channel, then please skip
+ on down to the Troubleshooting section.
+  
+---------------------------------------------------------------------------
+ III. Performance & Maintenance
+---------------------------------------------------------------------------
+
+ Properly tuning a database server for optimal performance and maximum
+ speeds is a science in and of itself and goes far beyond the scope of
+ this simple README file. However, I will offer a few tips that will help
+ you keep your PGSQL server running optimally.
+ 
+  1) Disable "fsync"
+     This setting can be found in postgresql.conf, and requires a reload
+     to take effect. The specifics of this setting can be found on
+     postgresql.org, but the result to us is that it can result in a
+     performance penalty. Unless your server has a habit of random
+     crashes, you will not be affected by disabling this setting.
+     
+  2) Run pg_autovacuum
+     This is a tool that can found in the PG source tree, and must be
+     compiled separately using gmake. It runs as a monitor to PG, watching
+     it and "vacuuming" the database when needed. Once again the details
+     of what vacumming is can be found on postgresql.org, but please note
+     that you should always vacuum your databases at least once a day,
+     particularly in a case like GSRPG where the database is use all the
+     time. If you cannot install pg_autovacuum, then I would recommend
+     setting up a cron job to vacuum on the side. Vacuuming is not
+     strictly necessary, but it does go a long way towards helping your
+     performance and keeping PG's resource use to a minimum.
+     
+---------------------------------------------------------------------------
+ IV. Troubleshooting
+---------------------------------------------------------------------------
+
+ If you are having problems keeping GSRPG online, please consult your
+ logfile to see any error messages the bot has produced. All error messages
+ from the database and from perl itself are logged there, and they should
+ provide a picture of what is wrong.
+ 
+ You may also run GSRPG with the --debug flag, which prevents daemonizing
+ and keeps you attached to the bot. You will see all incoming and outgoing
+ messages, as well as any errors the bot produces.
+ 
+---------------------------------------------------------------------------
+ V. Bug Reports
+---------------------------------------------------------------------------
+  
+ Should you find a bug (and you probably will sooner or later), the best
+ way to reach me is in #IRPG or #IdleRPG on irc.gamesurge.net. I'm on IRC
+ most of the time and you will get the fastest response there. Failing that,
+ you may email me at jake@himynameisjake.org.

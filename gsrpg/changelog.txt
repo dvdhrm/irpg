@@ -1,0 +1,240 @@
+===========================================================================
+GSRPG Changelog (Sourcecode is GPL'd)
+Copyright (©) NH "Harm"  2004-2008 
+Modified 25.November.2007
+===========================================================================
+
+The official website of GSRPG is located at http://irpg.net.
+General information on all versions of the game can be found there. If you
+have any questions about GSRPG or the Idle RPG game in general, please feel
+free to contact an admin on irc.gamesurge.net in #idlerpg.
+
+Legend
+ + added
+ - modified
+ ! removed
+ @ info
+
+---------------------------------------------------------------------------
+ v1.2.0
+---------------------------------------------------------------------------
+ + Added a line to the whoami output that will show what access an admin
+   has if the user is an admin. (code by Shoat)
+ + Added an 'editadmin' command that will allow you to add and remove each
+   admins access.  The main admin will no longer need to directly modify 
+   the database to add and revoke admin authority (code by Shoat)
+ + Introduced the 'patch' file for those game admins who do not wish to 
+   download and over-write their entire version of gsrpg.pl.  You may have
+   to modify the patch file to work with your bot if you have made any
+   custom modifications.  Making a backup beforehand is *STRONGLY* suggested.
+   (This feature was created by both Shoat and Harm)
+ - Edited the 'hog' command to allow admins who have the rights to summon
+   an hog the ability to target the HOG to a specific player.  This was
+   done to add flexibility and add opportunities for "rewards" from contests
+   or other such events. (concept by hatterson, code by Shoat w/help from
+   hatterson)
+ - Modified the unique item names
+ - Modified the list of Godsends and Calamaties to include some newer,
+   more clever entries.
+ - Modified the frequency that team battles occur.  Originally was an
+   equasion with a variable of 1500, that variable is now 500.
+ - Modified the frequency that calamaties occur.  Originally this was an
+   equasion with a variable of 2000, that variable is now 1000.
+ - Modified the frequency that godsends occur.  Originally this was an
+   equasion with a variable of 2000, that variable is now 1000.
+ - Modified the frequency that Hands of God occur.  Originally this was an
+   equasion with a variable of 3000, that variable is now 1500.
+ @ The version was bumped to 1.2.0 to reflect the newer line of development
+   and to reflect the large number of changes and modifications by the
+   current GSRPG/IRPG staff on GameSurge.
+
+---------------------------------------------------------------------------
+ v1.1.6
+---------------------------------------------------------------------------
+ + Added a password option for the monitor channel
+ + Added an 'mrejoin' command to force the bot to rejoin the monitor channel
+ - Modified the 'rejoin' command to not include rejoining the monitor channel
+
+---------------------------------------------------------------------------
+ v1.1.5
+---------------------------------------------------------------------------
+ + Added the Admin Notification channel where any admin commands issued
+   to the bot will be reported in the specified channel (code by Shoat)
+ + Added links to the player profiles in both the whois and lookup
+   commands. (Anthony)
+
+---------------------------------------------------------------------------
+ v1.1.4
+---------------------------------------------------------------------------
+ + Added a link to the players profile in the 'whoami' output. Please note
+   that you will have to update the link to work with your site. (Kerpz|Matt)
+ - Grammatical corrections made for the group quests and group battles,
+   specifically the 'have have' phrase (feigling)
+
+---------------------------------------------------------------------------
+ v1.1.3
+---------------------------------------------------------------------------
+ + Added 'rejoin' command for admins to make the bot rejoin should it be
+   kicked (admin level =>5)
+ + Added Foreign Keys to tables to ease deletion of players based on their
+   playerid.  When a player is dropped from gsrpg_players, it deletes the
+   associated entries in the other tables. (Cradly, code by Cradly)
+
+---------------------------------------------------------------------------
+ v1.1.2
+---------------------------------------------------------------------------
+ - Corrected random spelling and grammar errors
+ @ Cleaned up code 
+
+---------------------------------------------------------------------------
+ v1.1.1
+---------------------------------------------------------------------------
+ - fixed 'Can't return outside a subroutine' regarding line 113
+ @ cleaned up bot source to remove some oddness in formatting 
+
+---------------------------------------------------------------------------
+ v1.1.0
+---------------------------------------------------------------------------
+ 
+ - the prev_online hash and the adjusting of times is now only done when
+   the connection to the server is established (raw 001). this way if the
+   bot can't connect to the server, everyone doesn't get logged out
+ - fixed some weird typo/bug/something in quests that would never make them
+   start triggering
+ - recoded some things in the startup and shutdown areas so that the bot
+   does not spawn a new process if it can't [re]connect to the server. it
+   uses a goto loop now to go back up to the top and try again. if the
+   limit specified in maxtries is reached, it terminates itself (Matt)
+ + added a 'maxtries' entry to gsrpg.conf that specifies how many times the
+   bot will try to connect to the irc server
+ + added a 'notifymods' entry to gsrpg.conf that toggles whether the bot
+   will notify players when they challenge/team battle or are affected by
+   hogs/calamities/godsends/etc. this *could* cause some flooding issues,
+   so if it causes problems, disable it (Jerle)
+ + added a 'pidfile' entry to gsrpg.conf that creates a pid file for the
+   bot on daemonization (lots of people)
+ + added a 'localaddr' entry to gsrpg.conf that the bot will bind the
+   socket's local ip to, if given (Matt)
+ - fixed a few more grammatical errors within the bot (lots of people)
+ - lowered the chances of critical strikes significantly; unique items in
+   particular were being found entirely too often
+ 
+---------------------------------------------------------------------------
+ v1.0.4
+---------------------------------------------------------------------------
+ 
+ - fixed a battle in team battles that was causing them not to be logged
+   into the modifiers table (Harm)
+ - fixed the pennick option in gsrpg.conf so it actually works now (Ohmer)
+ - edited the regexp in checkstr() so hyphens are allowed now (ThiefMaster)
+ - fixed a small bug with team battles that could help/hurt a team
+   an enormous amount of time
+ - fixed a typo in team battles (LadyAnn)
+ 
+---------------------------------------------------------------------------
+ v1.0.3
+---------------------------------------------------------------------------
+
+ + added a checkstr() routine, which will validate all user input before
+   sending any text to the database. this corrects a very nasty little
+   hole in the class command, and should make for a more secure game on
+   the whole
+ - added in a fix to the join block because bahamut prefixes channel JOINs
+   with a :, which meant that the botchan check failed and the alarm was
+   never started
+ + added a 'floodwatch' entry to gsrpg.conf that truncates output
+   considerably (to prevent the bot from flooding off).
+ + added the 'hog' command for an admin to summon the hand of god (Raiden)
+ + added a fix to rpcheck() that adjust all values based on timestamps if
+   the system time suddenly changes more than 30 seconds (allows for things
+   like daylight savings time)
+ - fixed a slight bug in find_item() that allowed you to find a unique item
+   of the same type
+ - added a 'noop' command for admins that makes the bot exempt a user from
+   any ops/voices called by chanopvo() and massmodes()
+ - changed the order of the startup commands so that you actually can
+   specify an alternate config file (in place of gsrpg.conf)
+ - fixed a bug with team battles that caused enormous amounts of time
+   to be removed
+ + created a new config system based off of .conf files
+ ! completely scrapped the XML config system; after examining the
+   requirements for LibXML (the perl module I was using), I decided that
+   it had entirely too many dependencies, and a more traditional config
+   system would serve adequately
+ 
+---------------------------------------------------------------------------
+ v1.0.2
+---------------------------------------------------------------------------
+
+ + added a $modespl variable for massmodes() that is read from the server
+   on connect (defaults to 6)
+ - added in order by clauses to most of the modifiers to make player
+   selection more random
+ - fixed a slight problem with the error handling of loadconfig(). if
+   config.xml (or any other config file) cannot be located, the bot
+   terminates itself (rather than run on null values, which is bad)
+ + added a check at the beginning of quest() to look for quests.txt. if
+   the file cannot be located, quests are disabled for the next three
+   hours (then the bot checks again for quests.txt).
+ + added backup() sub that invokes pg_dump to back up the database every
+   six hours. automatically fails if pg_dump cannot be located. also added
+   an entry to config.xml to enable/disable this feature
+ - added an entry to config.xml called 'botadmin'. this is the username of
+   the main admin (owner) of the bot. it is granted full admin access
+   upon registration. the admin level of this account also cannot be
+   edited via 'chadmin'
+ @ first public release of the source to the bot
+ 
+---------------------------------------------------------------------------
+ v1.0.1
+---------------------------------------------------------------------------
+
+ - fixed some grammatical errors in team battle (ASk)
+ + added 'lookup' command to look up info on a person by their nickname
+ - the amount of time you gain/lose in team battle is now based off of a
+   random percentage, instead of a set value for all 3 players. this
+   corrects a problem where lower players paired with higher players could
+   have enormous amounts of time subtracted from their time (effectively
+   giving the low players a free level)
+ - fixed a bug with manual challenges that would never increment your
+   challenge timer (KcK)
+ - fixed a bug with registration that caused errors when inserting records
+   into the items/penalties table
+ - completely redid config.xml with comments and explanantions of every
+   setting. also added the option to disable any penalty (not just
+   privmsg/channel/kick/etc.)
+ - fixed the team battle update query to not suck anymore
+ @ fixed a whole bunch of miscellaneous typos that were causing problems
+ + added possibility for a random level_challenge() to rpcheck() (Jerle)
+ + added an entry to config.xml to write db errors to a separate file
+ - fixed the 'up' command so it actually works now (many people)
+ + added an entry to config.xml to disable channel privmsg penalties (pb)
+ + added an entry to config.xml to disable bot privmsg penalties (pb)
+ + brought back the kick penalty, with an option to disable (many people)
+ - slightly edited the register SQL statements to clean them up
+ + added 'chteamdesc' command to change team descriptions
+ + added 'chteampass' command to change team passwords
+ + added 'chteam' command to change team names
+ + added 'chadmin' command to change someone's admin acccess
+ + switched the privmsg block so that commands don't have a preceding ':'
+   in the name (revolution)
+ + added an entry to config.xml to turn control code stripping off
+ + added massmodes(), which ops/voices people who are auto-logged in when
+   the bot joins the channel. if the op/voice option feature is disabled,
+   so is this feature (Byte)
+ - fixed a moronic bug on my part that penalized you for kicking a person
+   out of the channel, instead of the person who was kicked (Harm)
+ + added penalize() function to make the code cleaner (jotun)
+ - switched to a timestamp-based system; time to level is calculated by
+   adding the number of seconds to level to time(). this removes the two
+   big update queries and takes a lot of the load off the database. made
+   lots of small changes to accomodate for this. does not completely
+   eradicate the timedrift problem, but should make it so that the times
+   are never off by more than a second (and even that is just a chance)
+ 
+---------------------------------------------------------------------------
+ v1.0.0
+---------------------------------------------------------------------------
+
+ @ first release; start of changelog
+
