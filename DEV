@@ -1,0 +1,42 @@
+= Development information =
+
+This project aims to create a website for the GSRPG bot. It also contains a copy
+of the GSRPG project, because the upstream project is no longer actively
+developed and we can bugfix and modify it here.
+
+See TODO for a list of still to do items. If you change anything, please don't
+forget to update ./TODO and add yourself in ./README to the contributors list.
+
+== Website ==
+
+The website in ./website/ is supposed to resemble http://irpg.php-4.info and
+http://www.irpg.net. It should be recoded from scratch to avoid licensing
+issues.
+
+The website's main page is index.php. It reads config.php for user-defined
+config values (if it exists) and initializes the database connection. Then it
+creates the main page layout and dispatches the creation of the requested
+subpage to another php script.
+
+The page is quite simple with a single node-selection. Each node must have an
+own php script which generates the HTML code for it. A node can use $db for
+database queries. If $db is false, then the database connection failed and the
+node should print an empty list or empty statistics or whatever it does.
+See ./website/teams.php for a simple example which uses the correct layout.
+
+See ./gsprg/gsrpg.scheme for database layout.
+
+== GSRPG ==
+
+The bot is copied unchanged into the ./gsrpg/ directory. It can be modified and
+extended with new features if you want. However, if we want more than few simple
+changes, we should probably first clean it up and split it into multiple source
+files and perl modules.
+
+== Patches ==
+
+If you want write-access to the repository, just contact me (gix / dvdhrm). If
+you are not familiar with GIT, then you can also send me patches or a link to
+your modification so I can submit it to the repository.
+Either send me a link on IRC or per email or a link to your own repository (svn,
+cvs or whatever you wanna use) or whatever... I try to figure it out.
