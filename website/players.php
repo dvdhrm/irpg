@@ -12,12 +12,12 @@
 
 /* initialize dynamicly retrieved data */
 $players = array();
+$sort = "level";
+if (isset($_GET["sort"]))
+	$sort = $_GET["sort"];
 
 if ($db) {
 	$orderby = "";
-	$sort = "level";
-	if (isset($_GET["level"]))
-		$sort = $_GET["level"];
 
 	if ($sort == "next")
 		$orderby = "ORDER BY next ASC";
@@ -49,17 +49,17 @@ if ($db) {
 		obj.style.cursor = "pointer";
 	}
 	function clickRow(player) {
-		window.location.href = "?node=players;id=" + player;
+		window.location.href = "?node=players&id=" + player;
 	}
 </script>
 
 <div align="right">
   Sort By:
-  <a href="?node=players;sort=level">Level</a> /
-  <a href="?node=players;sort=itemsum">Itemsum</a> /
-  <a href="?node=players;sort=next">Time to Level</a> /
-  <a href="?node=players;sort=username">Username</a> /
-  <a href="?node=players;sort=idled">Idled</a><br />
+  <a href="?node=players&sort=level">Level</a> /
+  <a href="?node=players&sort=itemsum">Itemsum</a> /
+  <a href="?node=players&sort=next">Time to Level</a> /
+  <a href="?node=players&sort=username">Username</a> /
+  <a href="?node=players&sort=idled">Idled</a><br />
 
   <strong class="highlight"><span class="vfont">+</span></strong>
   denotes online player,
@@ -97,7 +97,7 @@ foreach($players as $p) {
     <td align="left"><strong><?php echo $i++; ?></strong></td>
     <td align="left">
       <strong class="vfont"><?php echo $online; ?></strong>
-      <a href="?node=players;id=<?php echo $id; ?>"><?php echo $name; ?></a>,
+      <a href="?node=players&id=<?php echo $id; ?>"><?php echo $name; ?></a>,
       the level <?php echo $level; ?> <?php echo $desc; ?>
     </td>
     <td align="left"><?php echo $ttl; ?></td>
