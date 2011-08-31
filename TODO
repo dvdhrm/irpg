@@ -5,9 +5,15 @@ important fixes but also just some ideas about additional features.
 
 == Website ==
 
-- add team listing
 - add statistics
 - dynamically retrieve sidebar stats
+
+- Add detailed user listing. When a user is clicked and id=XY is passed as GET
+  parameter, then user-details should be displayed instead of user list.
+
+- Add detailed team listing. When a teamname is clicked and id=XY is passed as
+  GET parameter, the teams.php should show details for the requested team and
+  not the whole team-list.
 
 == GSRPG ==
 
